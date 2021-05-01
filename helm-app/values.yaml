@@ -1,0 +1,43 @@
+# Default values for helm-app.
+
+replicaCount: 1
+
+nginx:
+  image:
+    repository: bitnami/nginx
+    pullPolicy: IfNotPresent
+    tag: "1.19"
+
+app:
+  image:
+    registry: docker.io
+    repository: dotmartti/app
+    # tag overrides the image tag whose default is the chart appVersion.
+    # tag: "0.1.0"
+    pullPolicy: IfNotPresent
+
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  backendPort: 8888
+
+pg:
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 11.11.0-debian-10-r78
+  postgresqlDatabase: paxdb
+  postgresqlUsername: paxuser
+  replication:
+    enabled: false
+    user: repl_user
