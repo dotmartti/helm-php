@@ -10,6 +10,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -fr /var/lib/apt/lists/*
 
+# php conf
+COPY php-app.conf /opt/bitnami/php/etc/php-fpm.d/www.conf
+
 # the PHP application
 COPY app /app
 

@@ -10,8 +10,9 @@ if (isset($_GET['n'])) {
 ?>
   </h1>
   <p>
-<?
-    print "Your IP address is ".$_SERVER['REMOTE_ADDR'];
+<?php
+    print "Your IP address is ".$_SERVER['REMOTE_ADDR']."\n\n";
+    print "Database ".$_SERVER["PGDATABASE"]." at ".$_SERVER["PGHOST"]."\n";
 ?>
   </p>
  </body>

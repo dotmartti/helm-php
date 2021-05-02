@@ -13,6 +13,7 @@ export DOCKER_TAG=$(cat TAG)
 # to double-check you have set all 4 values properly
 env | grep DOCKER
 
+export DOCKER_TAG=$(cat TAG)
 docker build -t "${DOCKER_REPO}:${DOCKER_TAG}" --target final .
 docker push "${DOCKER_REPO}:${DOCKER_TAG}"
 ```

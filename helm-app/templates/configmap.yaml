@@ -8,7 +8,9 @@ data:
   app.conf: |-
     server {
       listen 0.0.0.0:{{ .Values.service.backendPort }};
+      charset utf-8;
       root /app;
+      index index.php;
       
       location /healthz {
         access_log off;
@@ -20,12 +22,20 @@ data:
         fastcgi_index index.php;
         include fastcgi.conf;
       }
-      
+
       location / {
         index index.php;
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        include fastcgi.conf;
+        try_files $uri @rewrites;
+      }
+
+      # rewrites adding .php extension for backend processing
+      location @rewrites {
+        if ($uri ~* ^/([a-z]+)$) {
+          rewrite ^/([a-z]+)$ /$1.php last;
+        }
+        if ($uri ~* ^/$) {
+          rewrite ^/$ /index.php last;
+        }
       }
 
       error_page   500 502 503 504  /50x.html;

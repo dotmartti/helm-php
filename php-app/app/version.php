@@ -1,8 +1,8 @@
 <html>
  <head>
-  <title>Application version</title>
+  <title>PHP info</title>
  </head>
  <body>
- <?php echo '<p>version 0.1.2</p>'; ?> 
+ <?php phpinfo(); ?>
  </body>
 </html>
