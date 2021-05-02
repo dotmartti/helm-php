@@ -12,6 +12,7 @@ RUN apt-get update \
 
 # php conf
 COPY php-app.conf /opt/bitnami/php/etc/php-fpm.d/www.conf
+COPY php.ini /opt/bitnami/php/etc/php.ini
 
 # the PHP application
 COPY app /app
