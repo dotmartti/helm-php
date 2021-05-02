@@ -16,6 +16,10 @@ app:
     # tag: "0.1.0"
     pullPolicy: IfNotPresent
 
+# Environment
+env_cm:
+  # DBUSER: "paxuser"
+
 
 nameOverride: ""
 fullnameOverride: ""

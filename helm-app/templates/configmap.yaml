@@ -9,19 +9,38 @@ data:
     server {
       listen 0.0.0.0:{{ .Values.service.backendPort }};
       root /app;
+      
       location /healthz {
         access_log off;
         return 200 "ok";
       }
+      
       location ~ \.php$ {
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         include fastcgi.conf;
       }
+      
       location / {
         index index.php;
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         include fastcgi.conf;
       }
+
+      error_page   500 502 503 504  /50x.html;
     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "helm-app.fullname" . }}-cm
+  labels:
+    {{- include "helm-app.labels" . | nindent 4 }}
+data:
+  PGUSER: {{ .Values.pg.postgresqlUsername | quote }}
+  PGDATABASE: {{ .Values.pg.postgresqlDatabase | quote }}
+  PGHOST: "{{ .Release.Name }}-pg"
+{{- range $k, $v := .Values.env_cm }}
+{{ $k | indent 2 }}: {{ $v | quote }}
+{{- end }}

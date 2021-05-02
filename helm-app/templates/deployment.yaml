@@ -19,6 +19,11 @@ spec:
         - name: app
           image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helm-app.fullname" . }}-cm
+            - secretRef:
+                name: {{ include "helm-app.fullname" . }}-secret
         - name: nginx
           image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
           imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
