@@ -1,6 +1,7 @@
 # php-app
 This is a Dockerfile to build a php-app image and upload to docker.io.
-Specify your credentials and your Docker repo (default is at docker.io).
+
+Specify your credentials and your Docker repo (default is at docker.io) tu build and push.
 
 ```
 export DOCKER_USER=
