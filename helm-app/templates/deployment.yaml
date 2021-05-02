@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-app.fullname" . }}
+  labels:
+    {{- include "helm-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "helm-app.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "helm-app.serviceAccountName" . }}
+      containers:
+        - name: app
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helm-app.fullname" . }}-cm
+            - secretRef:
+                name: {{ include "helm-app.fullname" . }}-secret
+        - name: nginx
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          ports:
+            - name: app-port
+              containerPort: {{ .Values.service.backendPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: app-port
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: app-port
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+          volumeMounts:
+          - name: nginx-config
+            mountPath: /opt/bitnami/nginx/conf/server_blocks
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: {{ include "helm-app.fullname" . }}-nginx-cm
