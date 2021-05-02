@@ -1,5 +1,11 @@
 # Helm chart of a PHP + Postgres app
 
+## Test existing installation
+'''
+curl http://35.228.234.91/ -H "Host: whatever.io"
+'''
+
+
 ## Prerequisites
 * 'kubectl' configured with your K8s cluster
 * Helm v3 installed
@@ -31,3 +37,23 @@ Using the existing variables
 '''
 helm upgrade testenv .
 '''
+
+### Delete existing release
+Using the existing variables
+'''
+helm delete testenv
+'''
+
+
+### Prerequisite: Install Nginx Ingress controller
+'''
+helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo update
+helm install nginx-ingress nginx-stable/nginx-ingress
+kubectl get deployment nginx-ingress-nginx-ingress
+kubectl get service nginx-ingress-nginx-ingress
+export NGINX_INGRESS_IP=$(kubectl get service nginx-ingress-nginx-ingress -ojson | jq -r '.status.loadBalancer.ingress[].ip')
+echo $NGINX_INGRESS_IP
+'''
+
+As a current temporary workaround, use the $NGINX_INGRESS_IP value in values.yaml ingress.dns definition.

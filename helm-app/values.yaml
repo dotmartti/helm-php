@@ -31,9 +31,13 @@ serviceAccount:
   name: ""
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
   backendPort: 8888
+
+ingress:
+  enabled: true
+  dns: whatever.io
 
 pg:
   image:
