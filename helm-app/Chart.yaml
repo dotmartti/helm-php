@@ -1,9 +1,9 @@
 apiVersion: v2
 name: helm-app
-version: 0.1.98
+version: 0.1.99
 description: A Helm chart for deploying a PHP+Postgres application to K8s
 type: application
-appVersion: "0.1.42"
+appVersion: "0.1.43"
 dependencies:
   - name: postgresql
     version: 10.4.0
