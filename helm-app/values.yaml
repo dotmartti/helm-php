@@ -46,6 +46,7 @@ pg:
     tag: 11.11.0-debian-10-r78
   postgresqlDatabase: paxdb
   postgresqlUsername: paxuser
+  postgresqlPassword: ""
   replication:
     enabled: true
     readReplicas: 3
