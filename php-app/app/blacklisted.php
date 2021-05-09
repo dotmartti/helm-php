@@ -2,6 +2,7 @@
   # this page returns HTTP 444 to users, no matter what
   http_response_code(444);
 
+  # connect to primary db
   $connection = pg_connect ("host=".$_SERVER["PGHOST"]." dbname=".$_SERVER["PGDATABASE"]." user=".$_SERVER["PGUSER"]." password=".$_SERVER["PGPASSWORD"]);
   if(!$connection) {
     exit;

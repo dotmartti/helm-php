@@ -51,6 +51,7 @@ data:
   PGUSER: {{ .Values.pg.postgresqlUsername | quote }}
   PGDATABASE: {{ .Values.pg.postgresqlDatabase | quote }}
   PGHOST: "{{ .Release.Name }}-pg"
+  PGHOSTREAD: "{{ .Release.Name }}-pg-read"
 {{- range $k, $v := .Values.env_cm }}
 {{ $k | indent 2 }}: {{ $v | quote }}
 {{- end }}

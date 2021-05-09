@@ -47,5 +47,8 @@ pg:
   postgresqlDatabase: paxdb
   postgresqlUsername: paxuser
   replication:
-    enabled: false
+    enabled: true
+    readReplicas: 3
     user: repl_user
+  readReplicas:
+    podAntiAffinityPreset: hard
