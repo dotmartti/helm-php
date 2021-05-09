@@ -24,6 +24,11 @@ spec:
                 name: {{ include "helm-app.fullname" . }}-cm
             - secretRef:
                 name: {{ include "helm-app.fullname" . }}-secret
+          volumeMounts:
+          - name: email-config
+            mountPath: /etc/msmtprc
+            subPath: msmtprc
+            readOnly: true
         - name: nginx
           image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
           imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
@@ -50,3 +55,6 @@ spec:
       - name: nginx-config
         configMap:
           name: {{ include "helm-app.fullname" . }}-nginx-cm
+      - name: email-config
+        configMap:
+          name: {{ include "helm-app.fullname" . }}-email-cm

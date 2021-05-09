@@ -1,7 +1,7 @@
 # Default values for helm-app.
 
 # how many application pods?
-replicaCount: 3
+replicaCount: 1
 
 nginx:
   image:
@@ -21,6 +21,9 @@ app:
 env_cm:
   # DBUSER: "paxuser"
 
+email:
+  user: ""
+  pw: ""
 
 nameOverride: ""
 fullnameOverride: ""

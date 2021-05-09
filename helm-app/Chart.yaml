@@ -1,10 +1,10 @@
 apiVersion: v2
 name: helm-app
-version: 0.1.101
+version: 0.1.121
 description: A Helm chart for deploying a PHP+Postgres application to K8s
 icon: http://images5.fanpop.com/image/photos/28100000/wacky-HHGG-icon-hitchhikers-guide-to-the-galaxy-28111797-200-178.jpg
 type: application
-appVersion: "0.1.43"
+appVersion: "0.1.63"
 dependencies:
   - name: postgresql
     version: 10.4.0

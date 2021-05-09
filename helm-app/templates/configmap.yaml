@@ -44,10 +44,31 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: {{ include "helm-app.fullname" . }}-email-cm
+  labels:
+    {{- include "helm-app.labels" . | nindent 4 }}
+data:
+  msmtprc: |-
+    account gmail
+    tls on
+    tls_trust_file /etc/ssl/certs/ca-certificates.crt
+    auth on
+    host smtp.gmail.com
+    port 587
+    user {{ .Values.email.user }}
+    from {{ .Values.email.user }}
+    password {{ .Values.email.pw }}
+    
+    account default : gmail
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: {{ include "helm-app.fullname" . }}-cm
   labels:
     {{- include "helm-app.labels" . | nindent 4 }}
 data:
+  EMAIL_USER: {{ .Values.email.user | quote }}
   PGUSER: {{ .Values.pg.postgresqlUsername | quote }}
   PGDATABASE: {{ .Values.pg.postgresqlDatabase | quote }}
   PGHOST: "{{ .Release.Name }}-pg"

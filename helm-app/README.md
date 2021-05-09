@@ -26,10 +26,10 @@ kubens dev
 helm dep up
 
 # check all the generated manifests with your secret values
-helm template . --name-template=testenv --set pg.postgresqlPassword=bzzz123,pg.postgresqlPostgresPassword=bzzzadmin123
+helm template . --name-template=testenv --set email.user=martti.remmelgas@gmail.com,email.pw=gmail-app-pass,pg.postgresqlPassword=bzzz123,pg.postgresqlPostgresPassword=bzzzadmin123
 
 # install the chart to your active K8s namespace
-helm install . --name-template=testenv --set pg.postgresqlPassword=bzzz123,pg.postgresqlPostgresPassword=bzzzadmin123
+helm install . --name-template=testenv --set email.user=martti.remmelgas@gmail.com,email.pw=gmail-app-pass,pg.postgresqlPassword=bzzz123,pg.postgresqlPostgresPassword=bzzzadmin123
 ```
 
 ### Upgrade existing release
@@ -81,7 +81,16 @@ helm install nginx-ingress nginx-stable/nginx-ingress
 kubectl get deployment nginx-ingress-nginx-ingress
 kubectl get service nginx-ingress-nginx-ingress
 export NGINX_INGRESS_IP=$(kubectl get service nginx-ingress-nginx-ingress -ojson | jq -r '.status.loadBalancer.ingress[].ip')
-echo $NGINX_INGRESS_IP
+sleep 30 && echo "Your external IP: $NGINX_INGRESS_IP"
 ```
 
-As a current temporary workaround, use the $NGINX_INGRESS_IP value in values.yaml ingress.dns definition.
+
+
+### Prerequisite: To use Gmail to send email, create an App Password
+I hope you have 2FA (2-Step-Verification) enabled for your Google Account. To use that same account for sending an email from your app, you need to create an alternative limited password that Google calls an "App Password". 
+
+https://support.google.com/accounts/answer/185833
+
+https://myaccount.google.com/ > Security > App Passwords > enter an app and device > Generate
+
+Use that value for Helm chart's **email.pw**=*pass*.

@@ -26,6 +26,14 @@
     exit;
   }
 
+  # send an email about the IP blocked
+  ini_set( 'display_errors', 1 );
+  error_reporting( E_ALL );
+  $to_email = "martti.remmelgas@gmail.com";
+  $subject = "Blocking IP for dotmartti/helm-php project";
+  $message = "Blocked IP: $ipaddress";
+  $mail_result = mail($to_email,$subject,$message);
+
   # insert the ipaddress and path to be blocked
   $path = $_SERVER["REQUEST_URI"];
   $insert="INSERT INTO blocklist VALUES ('".$ipaddress."', '".$path."')";
@@ -33,4 +41,6 @@
   if (!$result3) {
     exit;
   }
+
+
 ?>

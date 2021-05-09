@@ -10,6 +10,14 @@
   $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
   $select="SELECT count(1) ip FROM blocklist WHERE ip='".$ipaddress."'";
 
+  # send an email to notify of visitors
+  ini_set( 'display_errors', 1 );
+  error_reporting( E_ALL );
+  $to_email = "martti.remmelgas@gmail.com";
+  $subject = "Testing dotmartti/helm-php project";
+  $message = "Visitor from: $ipaddress";
+  $mail_result = mail($to_email,$subject,$message);
+  
   # if IP is blocked, then stop all processing
   $result2 = pg_query($connection, $select);
 

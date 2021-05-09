@@ -40,7 +40,7 @@ curl -v http://35.228.234.91/?n=4 -H "Host: whatever.io"
 * /blacklisted HTTP result will be 444 no matter what
 * Visitor will be blocked from doing anything in /blacklisted endpoint
 * Application endpoint /blacklisted will result in your IP added to "blocklist" table. 
-* TODO: send an email with the IP address to test@domain.com
+* Send an email with the blocked IP address to martti.remmelgas@gmail.com
 
 
 To test the app, use the external IP
@@ -68,7 +68,7 @@ paxdb=> select * from blocklist;
 ### Feature Set 3
 
 * Deploy database Master and Read Replica based on PostgreSQL.
-* My own design decision: block access also to index.php
+* My own design decision: block access also to index.php, not only /blacklist
 * My own design decision: use read replica for index.php database access
 ```
 $ kubectl exec -it testenv-helm-app-7cb57fbbc6-4fnp5 -c app -- bash
