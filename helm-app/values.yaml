@@ -1,6 +1,7 @@
 # Default values for helm-app.
 
-replicaCount: 1
+# how many application pods?
+replicaCount: 3
 
 nginx:
   image:
