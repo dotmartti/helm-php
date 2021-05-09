@@ -45,6 +45,34 @@ helm delete testenv
 ```
 
 
+### Prerequisite: Setup GKE cluster
+You should have a Kubernetes cluster somewhere. In this case let's say in Google cloud.
+
+* There you need to work in the context of one "project". 
+* Set up your favorite region and zone where you will deploy the cluster.
+* Enable an API feature for GKE
+* Select how many worker nodes you need
+
+```
+# SETUP cluster
+gcloud config set project <your project>
+gcloud config set compute/region europe-north1
+gcloud config set compute/zone europe-north1-c
+gcloud compute zones describe europe-north1-c
+gcloud config list project
+gcloud services enable container.googleapis.com
+
+# CREATE
+gcloud container clusters create mrt-cluster --num-nodes 3
+gcloud compute instances list
+
+
+# DELETE your cluster to clean up afterwards
+gcloud container clusters delete mrt-cluster
+```
+
+
+
 ### Prerequisite: Install Nginx Ingress controller
 ```
 helm repo add nginx-stable https://helm.nginx.com/stable
